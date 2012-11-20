@@ -1,0 +1,41 @@
+<html>
+    <head>
+	<title>Simple Push Service</title>
+    <script src="socket.io/socket.io.js"></script>
+    <script>
+		//create an instance of socket
+		var socket = io.connect('http://localhost:8999');
+		
+		//the client listens for 'singleSecondNotification' event
+		// for every 'singleSecondNotification' event that is emitted by the server, 
+		//we get the data that is passed along and do stuffs
+		//1st param is the event to listen for and the second param is the callback function that has to be executed when the event occurs...
+		socket.on('singleSecondNotification', function (data) {
+
+			console.log('Data pushed by server : ' + data);
+			document.getElementById('container1').innerText = data.time;
+
+		});
+		
+		//the client also listens for 'tenSecondNotification' event
+		socket.on('tenSecondNotification', function (data) {
+
+			console.log('Data pushed by server : ' + data);
+			document.getElementById('container2').innerText = data.alertMsg;
+
+		});
+		
+		
+    </script>
+        
+    </head>
+    <body>
+        <div id="container1">
+			This div will be dynamically updated every second!
+		</div>
+		<div id="container2">
+			This div will be dynamically updated every 10 second!
+		</div>
+		
+    </body>
+</html>
